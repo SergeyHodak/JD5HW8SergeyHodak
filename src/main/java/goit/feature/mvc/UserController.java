@@ -20,7 +20,7 @@ public class UserController {
 
     @GetMapping
     public ModelAndView list() {
-        ModelAndView result = new ModelAndView("user");
+        ModelAndView result = new ModelAndView("admin/user");
         String error = null;
         List<UserDTO> users = new ArrayList<>();
         try {
@@ -41,7 +41,7 @@ public class UserController {
                                @RequestParam("firstName") String firstName,
                                @RequestParam("lastName") String lastName,
                                @RequestParam("roles") String roles) {
-        ModelAndView result = new ModelAndView("user");
+        ModelAndView result = new ModelAndView("admin/user");
         String error;
         List<UserDTO> users = new ArrayList<>();
         try {
@@ -67,7 +67,7 @@ public class UserController {
                                @RequestParam("firstName") String firstName,
                                @RequestParam("lastName") String lastName,
                                @RequestParam("roles") String roles) {
-        ModelAndView result = new ModelAndView("user");
+        ModelAndView result = new ModelAndView("admin/user");
         String error;
         List<UserDTO> users = new ArrayList<>();
         try {
@@ -89,7 +89,7 @@ public class UserController {
 
     @PostMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable("id") UUID id) {
-        ModelAndView result = new ModelAndView("user");
+        ModelAndView result = new ModelAndView("admin/user");
         String error;
         List<UserDTO> users = new ArrayList<>();
         try {

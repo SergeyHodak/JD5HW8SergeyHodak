@@ -17,7 +17,7 @@ public class ManufacturerController {
 
     @GetMapping
     public ModelAndView list() {
-        ModelAndView result = new ModelAndView("manufacturer");
+        ModelAndView result = new ModelAndView("admin/manufacturer");
         String error = null;
         List<Manufacturer> manufacturers = null;
         try {
@@ -32,7 +32,7 @@ public class ManufacturerController {
 
     @PostMapping("/create")
     public ModelAndView create(@RequestParam("name") String name) {
-        ModelAndView result = new ModelAndView("manufacturer");
+        ModelAndView result = new ModelAndView("admin/manufacturer");
         String error;
         List<Manufacturer> manufacturers = null;
         try {
@@ -51,7 +51,7 @@ public class ManufacturerController {
     @PostMapping("/update/{id}")
     public ModelAndView update(@PathVariable("id") UUID id,
                                @RequestParam("name") String name) {
-        ModelAndView result = new ModelAndView("manufacturer");
+        ModelAndView result = new ModelAndView("admin/manufacturer");
         String error;
         List<Manufacturer> manufacturers = null;
         try {
@@ -70,7 +70,7 @@ public class ManufacturerController {
 
     @PostMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable("id") UUID id) {
-        ModelAndView result = new ModelAndView("manufacturer");
+        ModelAndView result = new ModelAndView("admin/manufacturer");
         String error;
         List<Manufacturer> manufacturers = null;
         try {

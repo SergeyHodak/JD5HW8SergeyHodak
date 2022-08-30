@@ -10,9 +10,7 @@
     </head>
     <body>
         <style>
-            .frame table, .frame table td {
-                border: 1px solid black;
-            }
+            .fond {background-color: #E3E4FA;}
         </style>
         <div class="container mt-3">
             <div class="card">
@@ -35,24 +33,40 @@
                                 <td>auto ID</td>
                                 <td><input type="text" class="form-control" placeholder="Name ..." name="name" id="creteName"></td>
                                 <td><input type="text" class="form-control" placeholder="Price ..." name="price" id="cretePrice"></td>
-                                <td><input type="text" class="form-control" placeholder="Manufacturer name ..." name="manufacturer" id="creteManufacturer"></td>
+                                <td><div class="input-group">
+                                    <select class="form-select" name="manufacturer" id="selectManufacturer">
+                                        <div th:each="manufacturer: ${manufacturers}">
+                                            <option th:value="${manufacturer}" th:text="${manufacturer}"></option>
+                                        </div>
+                                    </select>
+                                </div></td>
                                 <td><button class="btn btn-primary" type="submit">Create</button></td>
                             </tr>
                         </form>
                         <tr th:each="product: ${products}">
                             <form th:action="'/product/update/' + ${product.id}" method="POST" th:id="${product.id}">
-                                <td th:text="${product.id}"></td>
-                                <td><input type="text" class="form-control" th:value="${product.name}" name="name" id="name" th:form="${product.id}"></td>
-                                <td><input type="text" class="form-control" th:value="${product.price}" name="price" id="price" th:form="${product.id}"></td>
-                                <td><input type="text" class="form-control" th:value="${product.manufacturer}" name="manufacturer" id="manufacturer" th:form="${product.id}"></td>
-                                <td><button class="btn btn-primary btn-sm" type="submit" th:form="${product.id}">Update</button></td>
+                                <td><div class="fond" th:text="${product.id}"></div><br></td>
+                                <td><div class="fond" th:text="${product.name}"></div>
+                                    <input type="text" class="form-control" th:value="${product.name}" name="name" id="name" th:form="${product.id}"></td>
+                                <td><div class="fond" th:text="${product.price}"></div>
+                                    <input type="text" class="form-control" th:value="${product.price}" name="price" id="price" th:form="${product.id}"></td>
+                                <td><div class="fond" th:text="${product.manufacturer}"></div>
+                                    <div class="input-group">
+                                    <select class="form-select" name="manufacturer" id="manufacturer" th:form="${product.id}">
+                                        <div th:each="manufacturer: ${manufacturers}">
+                                            <option th:value="${manufacturer}" th:text="${manufacturer}"></option>
+                                        </div>
+                                    </select>
+                                </div></td>
+                                <td><br><button class="btn btn-primary btn-sm" type="submit" th:form="${product.id}">Update</button></td>
                             </form>
-                            <td><form th:action="'/product/delete/' + ${product.id}" method="POST" th:id="'del' + ${product.id}">
+                            <td><br><form th:action="'/product/delete/' + ${product.id}" method="POST" th:id="'del' + ${product.id}">
                                 <button class="btn btn-danger btn-sm" type="submit"  th:form="'del' + ${product.id}">delete</button>
                             </form></td>
                         </tr>
                     </table>
                 </div>
+                <a href="/" class="btn btn-sm btn-secondary">Back</a>
             </div>
         </div>
     </body>

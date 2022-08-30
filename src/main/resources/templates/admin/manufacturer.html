@@ -10,9 +10,7 @@
     </head>
     <body>
         <style>
-            .frame table, .frame table td {
-                border: 1px solid black;
-            }
+            .fond {background-color: #E3E4FA;}
         </style>
         <div class="container mt-3">
             <div class="card">
@@ -37,16 +35,18 @@
                         </form>
                         <tr th:each="manufacturer: ${manufacturers}">
                             <form th:action="'/manufacturer/update/' + ${manufacturer.id}" method="POST" th:id="${manufacturer.id}">
-                                <td th:text="${manufacturer.id}"></td>
-                                <td><input type="text" class="form-control" th:value="${manufacturer.name}" name="name" id="name" th:form="${manufacturer.id}"></td>
-                                <td><button class="btn btn-primary btn-sm" type="submit" th:form="${manufacturer.id}">Update</button></td>
+                                <td><div class="fond" th:text="${manufacturer.id}"></div><br></td>
+                                <td><div class="fond" th:text="${manufacturer.name}"></div>
+                                    <input type="text" class="form-control" th:value="${manufacturer.name}" name="name" id="name" th:form="${manufacturer.id}"></td>
+                                <td><br><button class="btn btn-primary btn-sm" type="submit" th:form="${manufacturer.id}">Update</button></td>
                             </form>
-                            <td><form th:action="'/manufacturer/delete/' + ${manufacturer.id}" method="POST" th:id="'del' + ${manufacturer.id}">
+                            <td><br><form th:action="'/manufacturer/delete/' + ${manufacturer.id}" method="POST" th:id="'del' + ${manufacturer.id}">
                                 <button class="btn btn-danger btn-sm" type="submit"  th:form="'del' + ${manufacturer.id}">delete</button>
                             </form></td>
                         </tr>
                     </table>
                 </div>
+                <a href="/" class="btn btn-sm btn-secondary">Back</a>
             </div>
         </div>
     </body>

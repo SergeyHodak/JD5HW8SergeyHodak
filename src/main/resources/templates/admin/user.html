@@ -10,9 +10,7 @@
     </head>
     <body>
         <style>
-            .frame table, .frame table td {
-                border: 1px solid black;
-            }
+            .fond {background-color: #E3E4FA;}
         </style>
         <div class="container mt-3">
             <div class="card">
@@ -45,20 +43,26 @@
                         </form>
                         <tr th:each="user: ${users}">
                             <form th:action="'/user/update/' + ${user.id}" method="POST" th:id="${user.id}">
-                                <td th:text="${user.id}"></td>
-                                <td><input type="text" class="form-control" th:value="${user.email}" name="email" id="email" th:form="${user.id}"></td>
-                                <td><input type="text" class="form-control" th:value="${user.password}" name="password" id="password" th:form="${user.id}"></td>
-                                <td><input type="text" class="form-control" th:value="${user.firstName}" name="firstName" id="firstName" th:form="${user.id}"></td>
-                                <td><input type="text" class="form-control" th:value="${user.lastName}" name="lastName" id="lastName" th:form="${user.id}"></td>
-                                <td><input type="text" class="form-control" th:value="${user.roles}" name="roles" id="roles" th:form="${user.id}"></td>
-                                <td><button class="btn btn-primary btn-sm" type="submit" th:form="${user.id}">Update</button></td>
+                                <td><div class="fond" th:text="${user.id}"></div><br></td>
+                                <td><div class="fond" th:text="${user.email}"></div>
+                                    <input type="text" class="form-control" th:value="${user.email}" name="email" id="email" th:form="${user.id}"></td>
+                                <td><div class="fond" th:text="${user.password}"></div>
+                                    <input type="text" class="form-control" th:value="${user.password}" name="password" id="password" th:form="${user.id}"></td>
+                                <td><div class="fond" th:text="${user.firstName}"></div>
+                                    <input type="text" class="form-control" th:value="${user.firstName}" name="firstName" id="firstName" th:form="${user.id}"></td>
+                                <td><div class="fond" th:text="${user.lastName}"></div>
+                                    <input type="text" class="form-control" th:value="${user.lastName}" name="lastName" id="lastName" th:form="${user.id}"></td>
+                                <td><div class="fond" th:text="${user.roles}"></div>
+                                    <input type="text" class="form-control" th:value="${user.roles}" name="roles" id="roles" th:form="${user.id}"></td>
+                                <td><br><button class="btn btn-primary btn-sm" type="submit" th:form="${user.id}">Update</button></td>
                             </form>
-                            <td><form th:action="'/user/delete/' + ${user.id}" method="POST" th:id="'del' + ${user.id}">
+                            <td><br><form th:action="'/user/delete/' + ${user.id}" method="POST" th:id="'del' + ${user.id}">
                                 <button class="btn btn-danger btn-sm" type="submit"  th:form="'del' + ${user.id}">delete</button>
                             </form></td>
                         </tr>
                     </table>
                 </div>
+                <a href="/" class="btn btn-sm btn-secondary">Back</a>
             </div>
         </div>
     </body>

@@ -17,7 +17,7 @@ public class RoleController {
 
     @GetMapping
     public ModelAndView list() {
-        ModelAndView result = new ModelAndView("role");
+        ModelAndView result = new ModelAndView("admin/role");
         String error = null;
         List<Role> roles = null;
         try {
@@ -32,7 +32,7 @@ public class RoleController {
 
     @PostMapping("/create")
     public ModelAndView create(@RequestParam("name") String name) {
-        ModelAndView result = new ModelAndView("role");
+        ModelAndView result = new ModelAndView("admin/role");
         String error;
         List<Role> roles = null;
         try {
@@ -51,7 +51,7 @@ public class RoleController {
     @PostMapping("/update/{id}")
     public ModelAndView update(@PathVariable("id") UUID id,
                                @RequestParam("name") String name) {
-        ModelAndView result = new ModelAndView("role");
+        ModelAndView result = new ModelAndView("admin/role");
         String error;
         List<Role> roles = null;
         try {
@@ -70,7 +70,7 @@ public class RoleController {
 
     @PostMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable("id") UUID id) {
-        ModelAndView result = new ModelAndView("role");
+        ModelAndView result = new ModelAndView("admin/role");
         String error;
         List<Role> roles = null;
         try {

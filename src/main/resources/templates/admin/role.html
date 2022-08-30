@@ -10,9 +10,7 @@
     </head>
     <body>
         <style>
-            .frame table, .frame table td {
-                border: 1px solid black;
-            }
+            .fond {background-color: #E3E4FA;}
         </style>
         <div class="container mt-3">
             <div class="card">
@@ -37,16 +35,18 @@
                         </form>
                         <tr th:each="role: ${roles}">
                             <form th:action="'/role/update/' + ${role.id}" method="POST" th:id="${role.id}">
-                                <td th:text="${role.id}"></td>
-                                <td><input type="text" class="form-control" th:value="${role.name}" name="name" id="name" th:form="${role.id}"></td>
-                                <td><button class="btn btn-primary btn-sm" type="submit" th:form="${role.id}">Update</button></td>
+                                <td><div class="fond" th:text="${role.id}"></div><br></td>
+                                <td><div class="fond" th:text="${role.name}"></div>
+                                    <input type="text" class="form-control" th:value="${role.name}" name="name" id="name" th:form="${role.id}"></td>
+                                <td><br><button class="btn btn-primary btn-sm" type="submit" th:form="${role.id}">Update</button></td>
                             </form>
-                            <td><form th:action="'/role/delete/' + ${role.id}" method="POST" th:id="'del' + ${role.id}">
+                            <td><br><form th:action="'/role/delete/' + ${role.id}" method="POST" th:id="'del' + ${role.id}">
                                 <button class="btn btn-danger btn-sm" type="submit"  th:form="'del' + ${role.id}">delete</button>
                             </form></td>
                         </tr>
                     </table>
                 </div>
+                <a href="/" class="btn btn-sm btn-secondary">Back</a>
             </div>
         </div>
     </body>

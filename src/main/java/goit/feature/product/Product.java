@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -31,8 +33,12 @@ public class Product {
     @NonNull
     private BigDecimal price;
 
-    @ManyToOne(cascade={CascadeType.REMOVE})
-    @JoinColumn(name="manufacturer_id", nullable=false)
+    @ManyToOne
+    @JoinTable(
+            name = "manufacturer_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "manufacturer_id"))
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Manufacturer manufacturer;
 
     public Product() {}
