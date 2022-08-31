@@ -1,5 +1,6 @@
 package goit.feature.mvc;
 
+import goit.feature.auth.AuthService;
 import goit.feature.manufacturer.Manufacturer;
 import goit.feature.manufacturer.ManufacturerDAO;
 import goit.feature.product.Product;
@@ -18,10 +19,16 @@ import java.util.*;
 public class ProductController {
     private final ProductDAO productDAO;
     private final ManufacturerDAO manufacturerDAO;
+    private final AuthService authService;
 
     @GetMapping
     public ModelAndView list() {
-        ModelAndView result = new ModelAndView("admin/product");
+        ModelAndView result;
+        if (authService.hasAuthority("ADMIN")) {
+            result = new ModelAndView("admin/product");
+        } else {
+            result = new ModelAndView("product");
+        }
         String error = null;
         List<ProductDTO> products = new ArrayList<>();
         List<String> manufacturers = new ArrayList<>();
@@ -45,6 +52,9 @@ public class ProductController {
     public ModelAndView create(@RequestParam("name") String name,
                                @RequestParam("price") String price,
                                @RequestParam("manufacturer") String manufacturer) {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/product");
         String error;
         List<ProductDTO> products = new ArrayList<>();
@@ -74,6 +84,9 @@ public class ProductController {
                                @RequestParam("name") String name,
                                @RequestParam("price") String price,
                                @RequestParam("manufacturer") String manufacturer) {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/product");
         String error;
         List<ProductDTO> products = new ArrayList<>();
@@ -101,6 +114,9 @@ public class ProductController {
 
     @PostMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable("id") UUID id) {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/product");
         String error;
         List<ProductDTO> products = new ArrayList<>();

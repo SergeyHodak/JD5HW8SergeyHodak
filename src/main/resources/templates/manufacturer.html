@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+        <title>Manufacturers</title>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
+    <body>
+        <div class="container mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                        </tr>
+                        <tr th:each="manufacturer: ${manufacturers}">
+                            <td th:text="${manufacturer.id}"></td>
+                            <td th:text="${manufacturer.name}"></td>
+                        </tr>
+                    </table>
+                </div>
+                <a href="/" class="btn btn-sm btn-secondary">Back</a>
+            </div>
+        </div>
+    </body>
+</html>

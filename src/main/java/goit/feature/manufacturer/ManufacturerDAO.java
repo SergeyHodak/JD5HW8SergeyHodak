@@ -3,6 +3,7 @@ package goit.feature.manufacturer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ public class ManufacturerDAO {
         return manufacturerRepository.findByName(name);
     }
 
+    @Transactional
     public void create(Manufacturer manufacturer) {
         UUID uuid;
         do{

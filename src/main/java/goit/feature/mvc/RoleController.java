@@ -1,5 +1,6 @@
 package goit.feature.mvc;
 
+import goit.feature.auth.AuthService;
 import goit.feature.role.Role;
 import goit.feature.role.RoleDAO;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +15,13 @@ import java.util.UUID;
 @RestController
 public class RoleController {
     private final RoleDAO roleDAO;
+    private final AuthService authService;
 
     @GetMapping
     public ModelAndView list() {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/role");
         String error = null;
         List<Role> roles = null;
@@ -32,6 +37,9 @@ public class RoleController {
 
     @PostMapping("/create")
     public ModelAndView create(@RequestParam("name") String name) {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/role");
         String error;
         List<Role> roles = null;
@@ -51,6 +59,9 @@ public class RoleController {
     @PostMapping("/update/{id}")
     public ModelAndView update(@PathVariable("id") UUID id,
                                @RequestParam("name") String name) {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/role");
         String error;
         List<Role> roles = null;
@@ -70,6 +81,9 @@ public class RoleController {
 
     @PostMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable("id") UUID id) {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/role");
         String error;
         List<Role> roles = null;

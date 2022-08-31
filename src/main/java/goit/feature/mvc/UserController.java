@@ -1,11 +1,13 @@
 package goit.feature.mvc;
 
+import goit.feature.auth.AuthService;
 import goit.feature.role.Role;
 import goit.feature.role.RoleDAO;
 import goit.feature.user.User;
 import goit.feature.user.UserDAO;
 import goit.feature.user.UserDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,9 +19,14 @@ import java.util.*;
 public class UserController {
     private final UserDAO userDAO;
     private final RoleDAO roleDAO;
+    private final AuthService authService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping
     public ModelAndView list() {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/user");
         String error = null;
         List<UserDTO> users = new ArrayList<>();
@@ -41,11 +48,15 @@ public class UserController {
                                @RequestParam("firstName") String firstName,
                                @RequestParam("lastName") String lastName,
                                @RequestParam("roles") String roles) {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/user");
         String error;
         List<UserDTO> users = new ArrayList<>();
         try {
-            User user = new User(email, password, firstName, lastName);
+            String encodePassword = passwordEncoder.encode(password);
+            User user = new User(email, encodePassword, firstName, lastName);
             user.setRoles(parser(roles));
             userDAO.create(user);
             for (User unit : userDAO.findAll()) {
@@ -67,11 +78,15 @@ public class UserController {
                                @RequestParam("firstName") String firstName,
                                @RequestParam("lastName") String lastName,
                                @RequestParam("roles") String roles) {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/user");
         String error;
         List<UserDTO> users = new ArrayList<>();
         try {
-            User user = new User(email, password, firstName, lastName);
+            String encodePassword = passwordEncoder.encode(password);
+            User user = new User(email, encodePassword, firstName, lastName);
             user.setId(id);
             user.setRoles(parser(roles));
             userDAO.update(user);
@@ -89,6 +104,9 @@ public class UserController {
 
     @PostMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable("id") UUID id) {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/user");
         String error;
         List<UserDTO> users = new ArrayList<>();

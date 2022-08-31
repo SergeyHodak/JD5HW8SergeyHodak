@@ -1,5 +1,6 @@
 package goit.feature.mvc;
 
+import goit.feature.auth.AuthService;
 import goit.feature.manufacturer.Manufacturer;
 import goit.feature.manufacturer.ManufacturerDAO;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +15,16 @@ import java.util.UUID;
 @RestController
 public class ManufacturerController {
     private final ManufacturerDAO manufacturerDAO;
+    private final AuthService authService;
 
     @GetMapping
     public ModelAndView list() {
-        ModelAndView result = new ModelAndView("admin/manufacturer");
+        ModelAndView result;
+        if (authService.hasAuthority("ADMIN")) {
+            result = new ModelAndView("admin/manufacturer");
+        } else {
+            result = new ModelAndView("manufacturer");
+        }
         String error = null;
         List<Manufacturer> manufacturers = null;
         try {
@@ -32,6 +39,9 @@ public class ManufacturerController {
 
     @PostMapping("/create")
     public ModelAndView create(@RequestParam("name") String name) {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/manufacturer");
         String error;
         List<Manufacturer> manufacturers = null;
@@ -51,6 +61,9 @@ public class ManufacturerController {
     @PostMapping("/update/{id}")
     public ModelAndView update(@PathVariable("id") UUID id,
                                @RequestParam("name") String name) {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/manufacturer");
         String error;
         List<Manufacturer> manufacturers = null;
@@ -70,6 +83,9 @@ public class ManufacturerController {
 
     @PostMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable("id") UUID id) {
+        if (!authService.hasAuthority("ADMIN")) {
+            return new ModelAndView("homepage");
+        }
         ModelAndView result = new ModelAndView("admin/manufacturer");
         String error;
         List<Manufacturer> manufacturers = null;
