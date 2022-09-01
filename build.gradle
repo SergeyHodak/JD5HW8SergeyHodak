@@ -47,3 +47,5 @@ tasks.register('release', Copy) {
 }
 
 release.dependsOn bootJar
+
+mainClassName = 'Application'
