@@ -33,6 +33,8 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
+defaultTasks "clean", "build", "installApp"
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
