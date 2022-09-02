@@ -20,10 +20,6 @@ repositories {
     mavenCentral()
 }
 
-node {
-    download = true
-}
-
 repositories {
 	mavenCentral()
 }
