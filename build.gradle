@@ -4,8 +4,6 @@ plugins {
 	id 'java'
 }
 
-apply plugin: 'eclipse'
-
 group = 'goit'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -14,10 +12,6 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
-}
-
-repositories {
-    mavenCentral()
 }
 
 repositories {
@@ -38,8 +32,6 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 }
-
-defaultTasks "clean", "build", "installApp"
 
 tasks.named('test') {
 	useJUnitPlatform()
