@@ -6,12 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, UUID>, JpaSpecificationExecutor<Role> {
-    @Query(
-            nativeQuery = true,
-            value = "SELECT id, name FROM role WHERE name = :name")
-    Role findByName(@Param("name") String name);
+    Optional<Role> findByName(String name);
 }

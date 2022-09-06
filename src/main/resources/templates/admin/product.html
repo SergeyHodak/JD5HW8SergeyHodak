@@ -52,6 +52,7 @@
                                 <td><div class="fond" th:text="${product.price}"></div>
                                     <input type="text" class="form-control" th:value="${product.price}" name="price" id="price" th:form="${product.id}"></td>
                                 <td><div class="fond" th:text="${product.manufacturer}"></div>
+                                    <br th:if="${product.manufacturer} == ''">
                                     <div class="input-group">
                                     <select class="form-select" name="manufacturer" id="manufacturer" th:form="${product.id}">
                                         <div th:each="manufacturer: ${manufacturers}">

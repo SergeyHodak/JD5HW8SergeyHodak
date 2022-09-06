@@ -45,7 +45,7 @@ public class RoleController {
         List<Role> roles = null;
         try {
             Role role = new Role(name);
-            roleDAO.create(role);
+            roleDAO.save(role);
             roles = roleDAO.findAll();
             error = "true";
         } catch (Exception ex) {
@@ -68,7 +68,7 @@ public class RoleController {
         try {
             Role role = new Role(name);
             role.setId(id);
-            roleDAO.update(role);
+            roleDAO.save(role);
             roles = roleDAO.findAll();
             error = "true";
         } catch (Exception ex) {

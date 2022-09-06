@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -17,20 +18,10 @@ public class ManufacturerDAO {
     }
 
     public Manufacturer findByName(String name) {
-        return manufacturerRepository.findByName(name);
+        return manufacturerRepository.findByName(name).get();
     }
 
-    @Transactional
-    public void create(Manufacturer manufacturer) {
-        UUID uuid;
-        do{
-            uuid = UUID.randomUUID();
-        }while (manufacturerRepository.existsById(uuid));
-        manufacturer.setId(uuid);
-        manufacturerRepository.save(manufacturer);
-    }
-
-    public void update(Manufacturer manufacturer) {
+    public void save(Manufacturer manufacturer) {
         manufacturerRepository.save(manufacturer);
     }
 

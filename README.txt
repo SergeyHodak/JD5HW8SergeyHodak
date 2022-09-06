@@ -26,12 +26,12 @@ The instruction is valid as of 2022.09.01.
     Open the Application class located at src/main/java/goit/ Application .java
     Click on the start symbol, opposite the line number 7 or 8 (it doesn't matter) select run.
 6. Wait for the program to assemble and run.
-    A sign of this should be two lines at the end, one of which will tell you which localhost you are assigned to, the default being 8080.
-    For example: "Tomcat started on port(s): 8080 (http) with context path".
+    A sign of this should be two lines at the end, one of which will tell you which localhost you are assigned to, the default being 10000.
+    For example: "Tomcat started on port(s): 10000 (http) with context path".
 7. Open a browser and follow the link.
-    Link localhost:8080
+    Link localhost:10000
 8. Log in as an administrator to configure the app.
-    login: admin
+    login: admin@mail.com
     password: admin
 9. Role
     here you can (available only to a user with the ADMIN role):

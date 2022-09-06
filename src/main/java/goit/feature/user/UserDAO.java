@@ -15,16 +15,7 @@ public class UserDAO {
         return userRepository.findAll();
     }
 
-    public void create(User user) {
-        UUID uuid;
-        do{
-            uuid = UUID.randomUUID();
-        }while (userRepository.existsById(uuid));
-        user.setId(uuid);
-        userRepository.save(user);
-    }
-
-    public void update(User user) {
+    public void save(User user) {
         userRepository.save(user);
     }
 

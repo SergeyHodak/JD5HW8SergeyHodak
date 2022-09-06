@@ -16,7 +16,7 @@
             <div th:if="${result} == 'true'">
                 <h2 align="center" th:text="'Result = ' + ${result}" style="color:#198754"></h2>
             </div>
-            <div th:if="${result != null && result != 'true'}">
+            <div th:if="${result != '' && result != 'true'}">
                 <h2 align="center" th:text="'Result = ' + ${result}" style="color:#dc3545"></h2>
             </div>
             <table class="table">
@@ -45,8 +45,7 @@
                         <td><div class="fond" th:text="${user.id}"></div><br></td>
                         <td><div class="fond" th:text="${user.email}"></div>
                             <input type="text" class="form-control" th:value="${user.email}" name="email" id="email" th:form="${user.id}"></td>
-                        <td><div class="fond" th:text="${user.password}"></div>
-                            <input type="text" class="form-control" th:value="${user.password}" name="password" id="password" th:form="${user.id}"></td>
+                        <td><br><input type="text" class="form-control" placeholder="Password ..." name="password" id="password" th:form="${user.id}"></td>
                         <td><div class="fond" th:text="${user.firstName}"></div>
                             <input type="text" class="form-control" th:value="${user.firstName}" name="firstName" id="firstName" th:form="${user.id}"></td>
                         <td><div class="fond" th:text="${user.lastName}"></div>

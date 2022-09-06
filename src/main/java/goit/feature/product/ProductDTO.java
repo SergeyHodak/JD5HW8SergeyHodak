@@ -19,7 +19,7 @@ public class ProductDTO {
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
-                .manufacturer(product.getManufacturer().getName())
+                .manufacturer(product.getManufacturer() == null ? "" : product.getManufacturer().getName())
                 .build();
     }
 }

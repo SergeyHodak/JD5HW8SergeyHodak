@@ -1,6 +1,7 @@
 package goit.feature.mvc;
 
 import goit.feature.auth.AuthService;
+import goit.feature.email.EmailFormatCheck;
 import goit.feature.role.Role;
 import goit.feature.role.RoleDAO;
 import goit.feature.user.User;
@@ -28,7 +29,7 @@ public class UserController {
             return new ModelAndView("homepage");
         }
         ModelAndView result = new ModelAndView("admin/user");
-        String error = null;
+        String error = "";
         List<UserDTO> users = new ArrayList<>();
         try {
             for (User user : userDAO.findAll()) {
@@ -52,17 +53,25 @@ public class UserController {
             return new ModelAndView("homepage");
         }
         ModelAndView result = new ModelAndView("admin/user");
-        String error;
+        String error = "";
         List<UserDTO> users = new ArrayList<>();
         try {
-            String encodePassword = passwordEncoder.encode(password);
-            User user = new User(email, encodePassword, firstName, lastName);
-            user.setRoles(parser(roles));
-            userDAO.create(user);
+            Set<Role> parser = parser(roles);
+            System.out.println("parser = " + parser);
+            if (!EmailFormatCheck.isTheEmailCorrect(email)) {
+                error = "Invalid email!";
+            } else if (parser.size() == 0) {
+                error = "The role cannot be absent!";
+            } else {
+                String encodePassword = passwordEncoder.encode(password);
+                User user = new User(email, encodePassword, firstName, lastName);
+                user.setRoles(parser);
+                userDAO.save(user);
+                error = "true";
+            }
             for (User unit : userDAO.findAll()) {
                 users.add(UserDTO.fromUser(unit));
             }
-            error = "true";
         } catch (Exception ex) {
             error = ex.getMessage();
         }
@@ -82,18 +91,25 @@ public class UserController {
             return new ModelAndView("homepage");
         }
         ModelAndView result = new ModelAndView("admin/user");
-        String error;
+        String error = "";
         List<UserDTO> users = new ArrayList<>();
         try {
-            String encodePassword = passwordEncoder.encode(password);
-            User user = new User(email, encodePassword, firstName, lastName);
-            user.setId(id);
-            user.setRoles(parser(roles));
-            userDAO.update(user);
+            Set<Role> parser = parser(roles);
+            if (!EmailFormatCheck.isTheEmailCorrect(email)) {
+                error = "Invalid email!";
+            } else if (parser.size() == 0) {
+                error = "The role cannot be absent!";
+            } else {
+                String encodePassword = passwordEncoder.encode(password);
+                User user = new User(email, encodePassword, firstName, lastName);
+                user.setId(id);
+                user.setRoles(parser);
+                userDAO.save(user);
+                error = "true";
+            }
             for (User unit : userDAO.findAll()) {
                 users.add(UserDTO.fromUser(unit));
             }
-            error = "true";
         } catch (Exception ex) {
             error = ex.getMessage();
         }
@@ -132,7 +148,10 @@ public class UserController {
         Set<Role> result = new HashSet<>();
         for (String role : split) {
             role = role.strip();
-            result.add(roleDAO.findByName(role));
+            Role unit = roleDAO.findByName(role);
+            if (unit != null) {
+                result.add(unit);
+            }
         }
         return result;
     }

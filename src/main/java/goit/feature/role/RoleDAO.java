@@ -16,19 +16,10 @@ public class RoleDAO {
     }
 
     public Role findByName(String name) {
-        return roleRepository.findByName(name);
+        return roleRepository.findByName(name).get();
     }
 
-    public void create(Role role) {
-        UUID uuid;
-        do{
-            uuid = UUID.randomUUID();
-        }while (roleRepository.existsById(uuid));
-        role.setId(uuid);
-        roleRepository.save(role);
-    }
-
-    public void update(Role role) {
+    public void save(Role role) {
         roleRepository.save(role);
     }
 

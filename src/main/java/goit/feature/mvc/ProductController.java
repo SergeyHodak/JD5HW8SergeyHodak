@@ -62,7 +62,7 @@ public class ProductController {
         try {
             Product product = new Product(name, new BigDecimal(price));
             product.setManufacturer(manufacturerDAO.findByName(manufacturer));
-            productDAO.create(product);
+            productDAO.save(product);
             for (Product unit : productDAO.findAll()) {
                 products.add(ProductDTO.fromProduct(unit));
             }
@@ -95,7 +95,7 @@ public class ProductController {
             Product product = new Product(name, new BigDecimal(price));
             product.setId(id);
             product.setManufacturer(manufacturerDAO.findByName(manufacturer));
-            productDAO.update(product);
+            productDAO.save(product);
             for (Product unit : productDAO.findAll()) {
                 products.add(ProductDTO.fromProduct(unit));
             }

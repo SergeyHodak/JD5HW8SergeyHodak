@@ -47,7 +47,7 @@ public class ManufacturerController {
         List<Manufacturer> manufacturers = null;
         try {
             Manufacturer manufacturer = new Manufacturer(name);
-            manufacturerDAO.create(manufacturer);
+            manufacturerDAO.save(manufacturer);
             manufacturers = manufacturerDAO.findAll();
             error = "true";
         } catch (Exception ex) {
@@ -70,7 +70,7 @@ public class ManufacturerController {
         try {
             Manufacturer manufacturer = new Manufacturer(name);
             manufacturer.setId(id);
-            manufacturerDAO.update(manufacturer);
+            manufacturerDAO.save(manufacturer);
             manufacturers = manufacturerDAO.findAll();
             error = "true";
         } catch (Exception ex) {

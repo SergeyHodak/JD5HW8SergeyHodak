@@ -15,16 +15,7 @@ public class ProductDAO {
         return productRepository.findAll();
     }
 
-    public void create(Product product) {
-        UUID uuid;
-        do{
-            uuid = UUID.randomUUID();
-        }while (productRepository.existsById(uuid));
-        product.setId(uuid);
-        productRepository.save(product);
-    }
-
-    public void update(Product product) {
+    public void save(Product product) {
         productRepository.save(product);
     }
 
