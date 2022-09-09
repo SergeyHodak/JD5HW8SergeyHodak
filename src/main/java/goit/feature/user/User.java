@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -25,6 +26,9 @@ public class User {
     private UUID id;
 
     @NonNull
+    @Pattern(
+            regexp = "[A-Za-z\\d!#$%&'*+/=?^_`.{|}~-]+@[a-z\\d]+.[a-z\\d]+",
+            message = "Invalid email!")
     @Column(name = "email")
     private String email;
 

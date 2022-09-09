@@ -1,7 +1,6 @@
 package goit.feature.mvc;
 
 import goit.feature.auth.AuthService;
-import goit.feature.email.EmailFormatCheck;
 import goit.feature.role.Role;
 import goit.feature.role.RoleDAO;
 import goit.feature.user.User;
@@ -12,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ModelAndView create(@RequestParam("email") String email,
+    public ModelAndView create(@Valid @RequestParam("email") String email,
                                @RequestParam("password") String password,
                                @RequestParam("firstName") String firstName,
                                @RequestParam("lastName") String lastName,
@@ -57,10 +57,7 @@ public class UserController {
         List<UserDTO> users = new ArrayList<>();
         try {
             Set<Role> parser = parser(roles);
-            System.out.println("parser = " + parser);
-            if (!EmailFormatCheck.isTheEmailCorrect(email)) {
-                error = "Invalid email!";
-            } else if (parser.size() == 0) {
+            if (parser.size() == 0) {
                 error = "The role cannot be absent!";
             } else {
                 String encodePassword = passwordEncoder.encode(password);
@@ -69,11 +66,17 @@ public class UserController {
                 userDAO.save(user);
                 error = "true";
             }
-            for (User unit : userDAO.findAll()) {
-                users.add(UserDTO.fromUser(unit));
-            }
         } catch (Exception ex) {
-            error = ex.getMessage();
+            String errorMessage = ex.getMessage();
+            if (errorMessage.equals("Could not commit JPA transaction; nested exception is " +
+                    "javax.persistence.RollbackException: Error while committing the transaction")) {
+                error = "Invalid email address!";
+            } else {
+                error = errorMessage;
+            }
+        }
+        for (User unit : userDAO.findAll()) {
+            users.add(UserDTO.fromUser(unit));
         }
         result.addObject("users", users);
         result.addObject("result", error);
@@ -82,7 +85,7 @@ public class UserController {
 
     @PostMapping("/update/{id}")
     public ModelAndView update(@PathVariable("id") UUID id,
-                               @RequestParam("email") String email,
+                               @Valid @RequestParam("email") String email,
                                @RequestParam("password") String password,
                                @RequestParam("firstName") String firstName,
                                @RequestParam("lastName") String lastName,
@@ -95,9 +98,7 @@ public class UserController {
         List<UserDTO> users = new ArrayList<>();
         try {
             Set<Role> parser = parser(roles);
-            if (!EmailFormatCheck.isTheEmailCorrect(email)) {
-                error = "Invalid email!";
-            } else if (parser.size() == 0) {
+            if (parser.size() == 0) {
                 error = "The role cannot be absent!";
             } else {
                 String encodePassword = passwordEncoder.encode(password);
@@ -107,11 +108,17 @@ public class UserController {
                 userDAO.save(user);
                 error = "true";
             }
-            for (User unit : userDAO.findAll()) {
-                users.add(UserDTO.fromUser(unit));
-            }
         } catch (Exception ex) {
-            error = ex.getMessage();
+            String errorMessage = ex.getMessage();
+            if (errorMessage.equals("Could not commit JPA transaction; nested exception is " +
+                    "javax.persistence.RollbackException: Error while committing the transaction")) {
+                error = "Invalid email address!";
+            } else {
+                error = errorMessage;
+            }
+        }
+        for (User unit : userDAO.findAll()) {
+            users.add(UserDTO.fromUser(unit));
         }
         result.addObject("users", users);
         result.addObject("result", error);
